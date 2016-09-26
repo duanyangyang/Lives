@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.bwie.test.jufanlive.activity.MainInterfaceActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:id="@+id/main_fl"></FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <RadioButton
+            android:id="@+id/main_interface_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="78dp"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:drawableTop="@drawable/selector_home"
+            android:padding="3dp"
+            android:text="首页"/>
+
+        <ImageView
+            android:id="@+id/main_party"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/li_maintab_party_pic_selected"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|top"/>
+
+        <RadioButton
+            android:id="@+id/main_interface_me_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="78dp"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_me"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="我的"
+            android:layout_gravity="right|center_vertical"/>
+
+    </FrameLayout>
+</LinearLayout>

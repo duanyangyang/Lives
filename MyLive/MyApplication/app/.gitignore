@@ -1,1 +1,13 @@
-/build
+*.iml
+.gradle
+.idea
+.DS_Store
+local.properties
+/captures
+/eakay/src/main/debug
+**build
+Apk*
+
+eakay/src/test/files
+eakay/src/test/java/cn/eakay/MeTest.java
+eakay/src/test/java/cn/eakay/SignGenerateTest.java

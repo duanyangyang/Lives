@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="10"
+              tools:context="com.bwie.test.jufanlive.fragment.HomePageFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_search"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/li_home_search_left_bg"
+            android:layout_alignParentBottom="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_richlist"
+            android:src="@drawable/li_hoem_richlist_img"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关注"
+            android:id="@+id/home_follow"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/home_search"
+            android:layout_marginStart="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="热门"
+            android:textSize="18sp"
+            android:id="@+id/home_hot"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最新"
+            android:textSize="18sp"
+            android:id="@+id/home_newest"
+            android:layout_marginEnd="42dp"
+            android:layout_alignTop="@+id/home_richlist"
+            android:layout_toStartOf="@+id/home_richlist"/>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="#cccccc"
+        android:id="@+id/home_viewpager"/>
+
+</LinearLayout>
