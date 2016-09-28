@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/room_live_start_bg"
+    tools:context="com.bwie.test.jufanlive.activity.LiveActivity">
+    <ImageButton
+        android:id="@+id/zhibo_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#00000000"
+        android:src="@drawable/li_camera_capture_photo_cancel_normal"/>
+
+    <EditText
+        android:id="@+id/live_zhibo_edit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:background="@null"
+        android:hint="    写个直播标题可以吸引更多用户"
+        android:textColorHint="#ffffff"
+        />
+
+    <View
+        android:id="@+id/live_zhibo_view"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_below="@+id/live_zhibo_edit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="#ffffff"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/live_zhibo_view"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/live_zhibo_wechat_unchecked_n"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_wechat_n"
+            />
+
+        <ImageButton
+            android:id="@+id/live_zhibo_wechat_checked_p"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_wechat_p"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_friend_unchecked_n"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_friend_circle_n"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_friend_checked_p"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_friend_circle_p"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_weibo_unchecked_n"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_weibo_n"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_weibo_checked_p"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_weibo_p"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_qqzone_unchecked_n"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_qqzone_n"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_qqzone_checked_p"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_qqzone_p"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_qq_unchecked_n"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_qq_n"/>
+
+        <ImageButton
+            android:id="@+id/live_zhibo_qq_checked_p"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/li_room_third_qq_p"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/live_zhibo"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ty_item"
+        android:text="开始直播"
+        android:textColor="#ffffff"/>
+</RelativeLayout>

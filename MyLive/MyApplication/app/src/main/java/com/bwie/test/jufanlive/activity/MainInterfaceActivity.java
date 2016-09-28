@@ -1,19 +1,26 @@
 package com.bwie.test.jufanlive.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.bwie.test.jufanlive.R;
+import com.bwie.test.jufanlive.application.MyApplication;
 import com.bwie.test.jufanlive.fragment.HomePageFragment;
 import com.bwie.test.jufanlive.fragment.MeInformationFragment;
+import com.bwie.test.jufanlive.view.NetworkJudgment;
 
 public class MainInterfaceActivity extends AppCompatActivity implements View.OnClickListener {
+
     private RadioButton maininterfacehome;
     private RadioButton maininterfacemeinformation;
     private ImageView mainparty;
@@ -21,10 +28,13 @@ public class MainInterfaceActivity extends AppCompatActivity implements View.OnC
     private HomePageFragment hpf;
     private MeInformationFragment meInformationFragment;
     private FragmentTransaction fragmentTransaction;
+    private long exitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.addActivity(this);
+        NetworkJudgment.getIntence(this);
         setContentView(R.layout.activity_main_interface);
         initialize();
     }
@@ -79,8 +89,49 @@ public class MainInterfaceActivity extends AppCompatActivity implements View.OnC
                 break;
             //跳转至直播
             case R.id.main_party:
-                Toast.makeText(MainInterfaceActivity.this, "直播", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainInterfaceActivity.this,LiveActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade, R.anim.hold);
                 break;
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            System.out.println(System.currentTimeMillis());
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                // Toast.makeText(MainActivity.this, "再按一次退出程序", 0).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("提示");
+                builder.setMessage("确定要退出吗？");
+                builder.setPositiveButton("退出",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                // 一键退出
+                                MyApplication.destoryAll();
+                            }
+                        });
+                builder.setNegativeButton("再看看",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.show();
+            }
+            return true;
+
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }
