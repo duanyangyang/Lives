@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bwie.test.jufanlive.R;
+import com.bwie.test.jufanlive.application.MyApplication;
 
 public class LiveActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +31,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.addActivity(this);
         setContentView(R.layout.activity_live);
         initialize();
     }
@@ -159,7 +161,6 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             //推流点击时
             case R.id.live_zhibo:
-                Toast.makeText(LiveActivity.this, "推流", Toast.LENGTH_SHORT).show();
                 Intent pushIntent = new Intent(LiveActivity.this, PushFlowActivity.class);
                 startActivity(pushIntent);
                 break;

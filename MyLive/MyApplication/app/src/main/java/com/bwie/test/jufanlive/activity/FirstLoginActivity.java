@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bwie.test.jufanlive.R;
+import com.bwie.test.jufanlive.application.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class FirstLoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.addActivity(this);
         mSf=getSharedPreferences("jufan",MODE_PRIVATE);
         if(mSf.getBoolean("flag",false)){
             Intent mIntent=new Intent(FirstLoginActivity.this,LogoActivity.class);

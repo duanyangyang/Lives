@@ -98,7 +98,7 @@ public class MainInterfaceActivity extends AppCompatActivity implements View.OnC
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            System.out.println(System.currentTimeMillis());
+          //  System.out.println(System.currentTimeMillis());
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 // Toast.makeText(MainActivity.this, "再按一次退出程序", 0).show();
                 exitTime = System.currentTimeMillis();
