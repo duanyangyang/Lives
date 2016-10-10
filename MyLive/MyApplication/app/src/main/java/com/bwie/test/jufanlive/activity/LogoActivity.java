@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 
 import com.bwie.test.jufanlive.R;
+import com.bwie.test.jufanlive.application.MyApplication;
 
 public class LogoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.addActivity(this);
         setContentView(R.layout.activity_logo);
         CountDownTimer cd=new CountDownTimer(5000,1000) {
             @Override

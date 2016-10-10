@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.bwie.test.jufanlive.R;
+import com.bwie.test.jufanlive.application.MyApplication;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -24,6 +25,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.addActivity(this);
         mSf=getSharedPreferences("ligang",MODE_PRIVATE);
         if(mSf.getBoolean("isLogin",false)){
             Intent mInten=new Intent(LoginActivity.this, MainInterfaceActivity.class);

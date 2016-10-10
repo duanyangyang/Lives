@@ -1,32 +1,32 @@
 package com.bwie.test.jufanlive.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.bwie.test.jufanlive.R;
 import com.bwie.test.jufanlive.application.MyApplication;
 import com.bwie.test.jufanlive.view.HWSupportList;
+import com.bwie.test.jufanlive.view.HeartLayout;
 import com.tencent.rtmp.ITXLivePushListener;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.TXLivePusher;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
-public class PushFlowActivity extends AppCompatActivity implements ITXLivePushListener {
-
+public class PushFlowActivity extends AppCompatActivity implements ITXLivePushListener,View.OnClickListener {
 
     private TXCloudVideoView videoview;
-    private Button btnPlay;
     private Button btnCameraChange;
     private Button btnHWEncode;
     private Button btnFaceBeauty;
@@ -39,12 +39,17 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
     StringBuffer mLogMsg = new StringBuffer("");
     private boolean mHWListConfirmDialogResult = false;
     private boolean mFlashTurnOn = false;
+    private HeartLayout heartLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.addActivity(this);
         setContentView(R.layout.activity_push_flow);
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
+            ActivityCompat.requestPermissions(this, mPermissionList, 888);
+        }
 
         mLivePusher = new TXLivePusher(this);
         mLivePushConfig = new TXLivePushConfig();
@@ -52,27 +57,38 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
         initialize();
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 888:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mVideoPublish = true;
+                } else {
+                }
+
+                break;
+        }
+    }
+
     private void initialize() {
         videoview = (TXCloudVideoView) findViewById(R.id.video_view);
-        btnPlay = (Button) findViewById(R.id.btnPlay);
         btnCameraChange = (Button) findViewById(R.id.btnCameraChange);
         btnHWEncode = (Button) findViewById(R.id.btnHWEncode);
         btnFaceBeauty = (Button) findViewById(R.id.btnFaceBeauty);
         btnFlash = (Button) findViewById(R.id.btnFlash);
-
-        //播放部分
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        heartLayout = (HeartLayout) findViewById(R.id.heart_layout);
+        videoview.setOnClickListener(this);
+        //美化部分
+        btnFaceBeauty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mVideoPublish) {
-                    stopPublishRtmp();
-                    mVideoPublish = false;
-                } else {
-                    FixOrAdjustBitrate();  //根据设置确定是“固定”还是“自动”码率
-                    mVideoPublish = startPublishRtmp();
-                }
+                Toast.makeText(PushFlowActivity.this, "美化部分", Toast.LENGTH_SHORT).show();
             }
         });
+
         //摄像头的转换
         btnCameraChange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +102,7 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
                 btnCameraChange.setBackgroundResource(mFrontCamera ? R.drawable.camera_change : R.drawable.camera_change2);
             }
         });
+
         //开启硬件加速
         btnHWEncode.getBackground().setAlpha(mHWVideoEncode ? 255 : 100);
         btnHWEncode.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +111,6 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
                 boolean HWVideoEncode = mHWVideoEncode;
                 mHWVideoEncode = !mHWVideoEncode;
                 btnHWEncode.getBackground().setAlpha(mHWVideoEncode ? 255 : 100);
-
                 if (mHWVideoEncode) {
                     if (mLivePushConfig != null) {
                         if (Build.VERSION.SDK_INT < 16) {
@@ -126,6 +142,7 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
                 }
             }
         });
+
         //闪关灯部分
         btnFlash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,21 +192,11 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
         if (mLivePushConfig == null || mLivePusher == null) {
             return;
         }
-//        RadioButton rb = (RadioButton) getActivity().findViewById(mRadioGroupBitrate.getCheckedRadioButtonId());
-//        int mode = Integer.parseInt((String) rb.getTag());
-
-        switch (4) {
-            case 4: /*720p*/
-                if (mLivePusher != null) {
-                    mLivePushConfig.setVideoResolution(TXLiveConstants.VIDEO_RESOLUTION_TYPE_720_1280);
-                    mLivePushConfig.setAutoAdjustBitrate(false);
-                    mLivePushConfig.setVideoBitrate(1500);
-                    mLivePusher.setConfig(mLivePushConfig);
-                }
-//                mBtnBitrate.setBackgroundResource(R.drawable.fix_bitrate);
-                break;
-            default:
-                break;
+        if (mLivePusher != null) {
+            mLivePushConfig.setVideoResolution(TXLiveConstants.VIDEO_RESOLUTION_TYPE_720_1280);
+            mLivePushConfig.setAutoAdjustBitrate(false);
+            mLivePushConfig.setVideoBitrate(1500);
+            mLivePusher.setConfig(mLivePushConfig);
         }
     }
 
@@ -199,12 +206,10 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
         mLivePusher.stopPusher();
         videoview.setVisibility(View.GONE);
 
-//        enableQRCodeBtn(true);
-        btnPlay.setBackgroundResource(R.drawable.play_start);
     }
 
     private boolean startPublishRtmp() {
-        String rtmpUrl = "rtmp://2000.livepush.myqcloud.com/live/2000_1f4652b179af11e69776e435c87f075e?bizid=2000";
+        String rtmpUrl = "rtmp://4335.livepush.myqcloud.com/live/4335_f804c981861d11e69776e435c87f075e?bizid=4335";
         if (TextUtils.isEmpty(rtmpUrl) || (!rtmpUrl.trim().toLowerCase().startsWith("rtmp://"))) {
             mVideoPublish = false;
             Toast.makeText(PushFlowActivity.this, "推流地址不合法，目前支持rtmp推流!", Toast.LENGTH_SHORT).show();
@@ -212,9 +217,6 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
         }
 
         videoview.setVisibility(View.VISIBLE);
-//        mLivePushConfig.setWatermark(mBitmap, 0, 0);
-//        mLivePushConfig.setWatermark(mBitmap, 10, 10);
-
         int customModeType = 0;
 
         mLivePushConfig.setCustomModeType(customModeType);
@@ -225,25 +227,17 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
         mLivePusher.startPusher(rtmpUrl.trim());
         mLivePusher.setLogLevel(TXLiveConstants.LOG_LEVEL_DEBUG);
 
-//        enableQRCodeBtn(false);
         clearLog();
         int[] ver = TXLivePusher.getSDKVersion();
         if (ver != null && ver.length >= 3) {
             mLogMsg.append(String.format("rtmp sdk version:%d.%d.%d ", ver[0], ver[1], ver[2]));
-//            mLogViewEvent.setText(mLogMsg);
         }
-
-        btnPlay.setBackgroundResource(R.drawable.play_pause);
-
-        // appendEventLog(0, "点击推流按钮！");
 
         return true;
     }
 
     protected void clearLog() {
         mLogMsg.setLength(0);
-//        mLogViewEvent.setText("");
-//        mLogViewStatus.setText("");
     }
 
 
@@ -258,6 +252,8 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
         if (mVideoPublish && !mLivePusher.isPushing()) {
             mLivePusher.startCameraPreview(videoview);
         }
+        FixOrAdjustBitrate();  //根据设置确定是“固定”还是“自动”码率
+        mVideoPublish = startPublishRtmp();
     }
 
     @Override
@@ -273,6 +269,7 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mVideoPublish = false;
         stopPublishRtmp();
         if (videoview != null) {
             videoview.onDestroy();
@@ -281,15 +278,7 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
 
     @Override
     public void onPushEvent(int event, Bundle param) {
-        String msg = param.getString(TXLiveConstants.EVT_DESCRIPTION);
-        //appendEventLog(event, msg);
-//        if (mScrollView.getVisibility() == View.VISIBLE){
-//            mLogViewEvent.setText(mLogMsg);
-//            scroll2Bottom(mScrollView, mLogViewEvent);
-//        }
-//        if (mLivePusher != null) {
-//            mLivePusher.onLogRecord("[event:" + event + "]" + msg + "\n");
-//        }
+
         //错误还是要明确的报一下
         if (event < 0) {
             Toast.makeText(PushFlowActivity.this, param.getString(TXLiveConstants.EVT_DESCRIPTION), Toast.LENGTH_SHORT).show();
@@ -301,17 +290,20 @@ public class PushFlowActivity extends AppCompatActivity implements ITXLivePushLi
             Toast.makeText(PushFlowActivity.this, param.getString(TXLiveConstants.EVT_DESCRIPTION), Toast.LENGTH_SHORT).show();
             mHWVideoEncode = false;
             mLivePushConfig.setHardwareAcceleration(mHWVideoEncode);
-            // mBtnHWEncode.setBackgroundResource(mHWVideoEncode ? R.drawable.quick : R.drawable.quick2);
         }
+    }
+    @Override
+    public void onNetStatus(Bundle bundle) {
+
     }
 
     @Override
-    public void onNetStatus(Bundle bundle) {
-//        String str = getNetStatusString(status);
-//        mLogViewStatus.setText(str);
-//        Log.d(TAG, "Current status: " + status.toString());
-//        if (mLivePusher != null){
-//            mLivePusher.onLogRecord("[net state]:\n"+str+"\n");
-//        }
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.video_view:
+//                Toast.makeText(PushFlowActivity.this, "屏幕点击", Toast.LENGTH_SHORT).show();
+                heartLayout.addFavor();
+                break;
+        }
     }
 }
