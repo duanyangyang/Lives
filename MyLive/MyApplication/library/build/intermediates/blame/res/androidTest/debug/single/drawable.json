@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\mydemo\\Lives\\MyLive\\MyApplication\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_top.xml",
+        "source": "E:\\mydemo\\Lives\\MyLive\\MyApplication\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
+    },
+    {
+        "merged": "E:\\mydemo\\Lives\\MyLive\\MyApplication\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_bottom.xml",
+        "source": "E:\\mydemo\\Lives\\MyLive\\MyApplication\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
+    }
+]

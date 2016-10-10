@@ -1,18 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bwie.test.jufanlive.MainActivity">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/hot_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ptr:ptrDrawable="@drawable/animation1"
+        ptr:ptrMode="both">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="最热"
-        android:id="@+id/textView2"
-        android:textSize="23sp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <com.bwie.test.jufanlive.view.ChildViewPager
+                    android:id="@+id/hot_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp" />
+
+                <RadioGroup
+                    android:id="@+id/hot_rg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    ></RadioGroup>
+            </RelativeLayout>
+
+            <com.bwie.test.jufanlive.view.HotListView
+                android:id="@+id/hot_lv"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:divider="#00000000"
+                android:dividerHeight="10dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+</LinearLayout>
+
